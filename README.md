@@ -1,4 +1,9 @@
 # quran-nana
+
+<div align="center">
+  <img src="quran%20nana/assets/welcome_banner.png" alt="Quran Analytics & Scientific Miracles Banner" width="100%" style="border-radius: 12px; margin-bottom: 20px;">
+</div>
+
 # Quran Analytics & Scientific Miracles Project (PHP & MySQL)
 ### مشروع التحليلات القرآنية والإعجاز العلمي (PHP & MySQL)
 

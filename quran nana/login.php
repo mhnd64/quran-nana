@@ -90,9 +90,122 @@ if (isset($_GET['logout'])) {
 
         .container {
             width: 100%;
-            max-width: 480px;
+            max-width: 1100px;
             padding: 24px;
             z-index: 10;
+            display: flex;
+            gap: 32px;
+            align-items: stretch;
+            justify-content: center;
+            flex-direction: row;
+        }
+
+        @media (max-width: 900px) {
+            .container {
+                flex-direction: column;
+                align-items: center;
+            }
+            .intro-card, .auth-card {
+                width: 100% !important;
+                max-width: 480px;
+            }
+        }
+
+        .intro-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            text-align: right;
+            flex: 1.2;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+
+        .banner-wrapper {
+            width: 100%;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            margin-bottom: 24px;
+        }
+
+        .welcome-banner {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
+        }
+
+        .intro-title {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: #ffffff;
+            background: linear-gradient(135deg, #ffffff, var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .intro-desc {
+            color: var(--text-muted);
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 24px;
+        }
+
+        .features-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-top: auto;
+        }
+
+        .feature-item {
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            padding: 12px 16px;
+            border-radius: 12px;
+        }
+
+        .feature-item:hover {
+            background: rgba(16, 185, 129, 0.05);
+            border-color: rgba(16, 185, 129, 0.2);
+            transform: translateX(-4px);
+        }
+
+        .feature-icon {
+            font-size: 24px;
+            background: rgba(16, 185, 129, 0.1);
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            color: var(--primary);
+            flex-shrink: 0;
+        }
+
+        .feature-text h3 {
+            font-size: 15px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 4px;
+        }
+
+        .feature-text p {
+            font-size: 12px;
+            color: var(--text-muted);
+            line-height: 1.4;
         }
 
         .auth-card {
@@ -104,6 +217,10 @@ if (isset($_GET['logout'])) {
             padding: 40px;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
             text-align: center;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
 
         .brand-logo {
@@ -262,6 +379,40 @@ if (isset($_GET['logout'])) {
 <body>
 
     <div class="container">
+        <!-- Welcoming & Introductory Card -->
+        <div class="intro-card">
+            <div class="banner-wrapper">
+                <img src="assets/welcome_banner.png" alt="Quran Analytics Banner" class="welcome-banner">
+            </div>
+            <h1 class="intro-title">مشروع التحليلات القرآنية والإعجاز العلمي</h1>
+            <p class="intro-desc">
+                مرحباً بك في المنصة الرقمية التفاعلية المخصصة لعرض ودراسة آيات الإعجاز العلمي في القرآن الكريم. تتيح لك المنصة البحث الفوري في الآيات، واستكشاف الدلائل والمعجزات الكونية والطبية، وتتبع الإحصائيات عبر لوحة التحكم.
+            </p>
+            <div class="features-list">
+                <div class="feature-item">
+                    <span class="feature-icon">📖</span>
+                    <div class="feature-text">
+                        <h3>تصفح القرآن الكريم والبحث</h3>
+                        <p>واجهة بحث ذكية وفورية للوصول للآيات وتتبع تكرار الكلمات والمواضيع القرآنية.</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">🔬</span>
+                    <div class="feature-text">
+                        <h3>موسوعة الإعجاز العلمي</h3>
+                        <p>استكشاف المعجزات المقسمة علمياً (الفلك، الجيولوجيا، الطب، البحار) بأسلوب شيق ومدعم بالحقائق.</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">📊</span>
+                    <div class="feature-text">
+                        <h3>تحليلات وإدارة ذكية للمحتوى</h3>
+                        <p>لوحة تحكم تفاعلية للمشرفين والطلاب لمتابعة الإحصائيات، وإدارة المستخدمين والمعجزات العلمية.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="auth-card">
             <!-- Brand Logo -->
             <div class="brand-logo">
