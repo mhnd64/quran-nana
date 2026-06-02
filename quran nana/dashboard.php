@@ -21,7 +21,7 @@ if ($res_v) {
 }
 
 // جلب معلومات المستخدم الحالي وصلاحياته المخزنة في الجلسة
-$user_role = isset($_SESSION['role']) ? $_SESSION['role'] : 'student';
+$user_role = isset($_SESSION['role']) ? $_SESSION['role'] : 'contributor';
 $username = isset($_SESSION['username']) ? $_SESSION['username'] : 'User';
 ?>
 <!DOCTYPE html>
@@ -398,7 +398,7 @@ $username = isset($_SESSION['username']) ? $_SESSION['username'] : 'User';
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
                     </svg>
-                    <span>Home</span>
+                    <span>Dashboard</span>
                 </a>
             </li>
             <li>
@@ -417,16 +417,16 @@ $username = isset($_SESSION['username']) ? $_SESSION['username'] : 'User';
                     <span>Scientific Miracles</span>
                 </a>
             </li>
-            <?php if ($user_role === 'admin'): ?>
             <li>
                 <a href="manage_miracles.php">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
                     </svg>
-                    <span>Admin Panel</span>
+                    <span>Manage Miracles</span>
                 </a>
             </li>
+            <?php if ($user_role === 'superadmin'): ?>
             <li>
                 <a href="manage_users.php">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -440,7 +440,7 @@ $username = isset($_SESSION['username']) ? $_SESSION['username'] : 'User';
 
         <div class="user-strip">
             <span class="username">Welcome, <?php echo htmlspecialchars($username); ?></span>
-            <span class="role-badge"><?php echo $user_role === 'admin' ? 'Administrator' : 'Student'; ?></span>
+            <span class="role-badge"><?php echo $user_role === 'superadmin' ? 'Superadmin' : 'Contributor'; ?></span>
             <a href="logout.php" class="btn-logout">Logout</a>
         </div>
     </header>
@@ -487,7 +487,7 @@ $username = isset($_SESSION['username']) ? $_SESSION['username'] : 'User';
                     </div>
                     <div class="stat-info">
                         <h3>Session Privilege</h3>
-                        <p><?php echo $user_role === 'admin' ? 'Full Access' : 'Read Only'; ?></p>
+                        <p><?php echo $user_role === 'superadmin' ? 'Superadmin (Full Access)' : 'Contributor (Add/Edit)'; ?></p>
                     </div>
                 </div>
             </div>
@@ -497,7 +497,7 @@ $username = isset($_SESSION['username']) ? $_SESSION['username'] : 'User';
             <div class="features-grid">
                 <div class="feature-card">
                     <h3>SQL Holy Quran Browser</h3>
-                    <p>Browse verses of the Holy Quran directly from your SQL database. Perform fast keyword searches and download the entire text via the 1-click external API downloader.</p>
+                    <p>Browse verses of the Holy Quran directly from your SQL database. Perform fast keyword searches and view translation data instantly.</p>
                     <a href="quran.php" class="btn">Browse Verses</a>
                 </div>
 
@@ -507,11 +507,17 @@ $username = isset($_SESSION['username']) ? $_SESSION['username'] : 'User';
                     <a href="miracles.php" class="btn">Explore Directory</a>
                 </div>
 
-                <?php if ($user_role === 'admin'): ?>
                 <div class="feature-card">
-                    <h3>Admin Console (Manage Miracles)</h3>
-                    <p>Full administrative capabilities to add new research topics, edit existing summaries, or delete obsolete entries to maintain the database.</p>
-                    <a href="manage_miracles.php" class="btn" style="background: linear-gradient(135deg, #f59e0b, #d97706)">Manage Entries</a>
+                    <h3>Manage Quranic Miracles</h3>
+                    <p>Contribute new research topics, edit summaries, or enrich the database of Quranic scientific wonders.</p>
+                    <a href="manage_miracles.php" class="btn" style="background: linear-gradient(135deg, #10b981, #059669)">Manage Miracles</a>
+                </div>
+
+                <?php if ($user_role === 'superadmin'): ?>
+                <div class="feature-card">
+                    <h3>Superadmin User Control</h3>
+                    <p>Review, verify, and activate pending contributors or manage admin accounts to maintain platform security.</p>
+                    <a href="manage_users.php" class="btn" style="background: linear-gradient(135deg, #f59e0b, #d97706)">Manage Users</a>
                 </div>
                 <?php endif; ?>
             </div>

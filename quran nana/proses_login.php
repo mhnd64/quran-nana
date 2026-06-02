@@ -12,7 +12,7 @@ if ($username === '' || $password === '') {
 }
 
 // 2. استعلام قاعدة البيانات الآمن (Prepared Statements) لحظر هجمات SQL Injection
-$query = "SELECT username, password, role FROM user WHERE username = ? LIMIT 1";
+$query = "SELECT username, password, role, status FROM user WHERE username = ? LIMIT 1";
 
 if ($stmt = mysqli_prepare($conn, $query)) {
     // ربط المعاملات (Binding parameters)
@@ -21,8 +21,8 @@ if ($stmt = mysqli_prepare($conn, $query)) {
     // تنفيذ وجلب النتائج
     mysqli_stmt_execute($stmt);
     
-    // ربط النتيجة بمتغيرات داخلية تشمل صلاحية المستخدم (role)
-    mysqli_stmt_bind_result($stmt, $db_username, $db_password, $db_role);
+    // ربط النتيجة بمتغيرات داخلية تشمل صلاحية المستخدم (role) وحالة الحساب
+    mysqli_stmt_bind_result($stmt, $db_username, $db_password, $db_role, $db_status);
     
     // جلب البيانات
     if (mysqli_stmt_fetch($stmt)) {
@@ -41,6 +41,12 @@ if ($stmt = mysqli_prepare($conn, $query)) {
         }
 
         if ($password_matches) {
+            // التحقق من أن الحساب مفعل ونشط من قبل المشرف
+            if ($db_status !== 'active') {
+                header("Location: login.php?error=pending");
+                exit;
+            }
+
             // إنشاء الجلسة وتحويل المستخدم للوحة التحكم وتخزين الصلاحيات
             $_SESSION['username'] = $db_username;
             $_SESSION['role']     = $db_role;

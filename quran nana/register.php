@@ -36,17 +36,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (mysqli_stmt_num_rows($stmt) > 0) {
             $error_msg = "اسم المستخدم محجوز بالفعل، يرجى اختيار اسم آخر.";
         } else {
-            // تشفير كلمة المرور وتعيين الصلاحية الافتراضية كطالب (student)
+            // تشفير كلمة المرور وتعيين الصلاحية الافتراضية كعضو مساهم (contributor) وحالة الانتظار (pending)
             $hashed_pw = password_hash($password, PASSWORD_DEFAULT);
-            $role = 'student';
+            $role = 'contributor';
+            $status = 'pending';
             
-            // إدراج الحساب الجديد في قاعدة البيانات بشكل آمن
-            $insert_stmt = mysqli_prepare($conn, "INSERT INTO `user` (username, password, role) VALUES (?, ?, ?)");
-            mysqli_stmt_bind_param($insert_stmt, "sss", $username, $hashed_pw, $role);
+            // إدراج الحساب الجديد في قاعدة البيانات بشكل آمن مع الحالة الافتراضية
+            $insert_stmt = mysqli_prepare($conn, "INSERT INTO `user` (username, password, role, status) VALUES (?, ?, ?, ?)");
+            mysqli_stmt_bind_param($insert_stmt, "ssss", $username, $hashed_pw, $role, $status);
             
             if (mysqli_stmt_execute($insert_stmt)) {
-                $success_msg = "تم إنشاء الحساب بنجاح! جاري تحويلك لصفحة تسجيل الدخول...";
-                header("refresh:2;url=login.php");
+                $success_msg = "Account created! Pending Superadmin verification before you can log in. / تم إنشاء الحساب بنجاح! حسابك قيد المراجعة والموافقة من قبل المدير العام قبل تفعيل دخولك. جاري تحويلك...";
+                header("refresh:4;url=login.php");
             } else {
                 $error_msg = "حدث خطأ أثناء عملية التسجيل، يرجى المحاولة لاحقاً.";
             }

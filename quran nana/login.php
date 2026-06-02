@@ -12,7 +12,11 @@ $logout_msg = "";
 
 // 2. Check for error message
 if (isset($_GET['error'])) {
-    $error_msg = "Invalid username or password";
+    if ($_GET['error'] === 'pending') {
+        $error_msg = "Your contributor account is pending approval by the Superadmin. Please check back later! / حساب المساهم الخاص بك قيد المراجعة والتحقق من قبل المدير العام. يرجى المحاولة لاحقاً.";
+    } else {
+        $error_msg = "Invalid username or password / اسم المستخدم أو كلمة المرور غير صحيحة";
+    }
 }
 
 // 3. Check for logout message

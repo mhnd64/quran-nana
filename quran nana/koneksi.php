@@ -15,14 +15,26 @@ if (!$conn) {
 mysqli_query($conn, "CREATE DATABASE IF NOT EXISTS `$db` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci");
 mysqli_select_db($conn, $db);
 
-// 1. إنشاء جدول المستخدمين 'user' مع دعم الصلاحيات (Role)
+// 1. إنشاء جدول المستخدمين 'user' مع دعم الصلاحيات وحالة الحساب
 mysqli_query($conn, "CREATE TABLE IF NOT EXISTS `user` (
     `id` INT AUTO_INCREMENT PRIMARY KEY,
     `username` VARCHAR(50) NOT NULL UNIQUE,
     `password` VARCHAR(255) NOT NULL,
-    `role` VARCHAR(20) NOT NULL DEFAULT 'student',
+    `role` VARCHAR(20) NOT NULL DEFAULT 'contributor',
+    `status` VARCHAR(20) NOT NULL DEFAULT 'pending',
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;");
+
+// التحقق من وجود عمود الحالة status وتحديث الحقول للبيانات القديمة إن وجدت
+$check_status_col = mysqli_query($conn, "SHOW COLUMNS FROM `user` LIKE 'status'");
+if (mysqli_num_rows($check_status_col) === 0) {
+    mysqli_query($conn, "ALTER TABLE `user` ADD COLUMN `status` VARCHAR(20) NOT NULL DEFAULT 'pending' AFTER `role`");
+    mysqli_query($conn, "UPDATE `user` SET `status` = 'active'");
+}
+
+// تحديث الأدوار القديمة لتتوافق مع المسميات الجديدة
+mysqli_query($conn, "UPDATE `user` SET `role` = 'superadmin' WHERE `role` = 'admin'");
+mysqli_query($conn, "UPDATE `user` SET `role` = 'contributor' WHERE `role` = 'student'");
 
 // 2. إنشاء جدول الإعجاز العلمي 'scientific_miracles'
 mysqli_query($conn, "CREATE TABLE IF NOT EXISTS `scientific_miracles` (
@@ -49,13 +61,13 @@ mysqli_query($conn, "CREATE TABLE IF NOT EXISTS `quran_verses` (
 // إدخال الحسابات التجريبية الافتراضية إذا كان الجدول فارغاً (تلقيم البيانات)
 $check_users = mysqli_query($conn, "SELECT * FROM `user` LIMIT 1");
 if (mysqli_num_rows($check_users) === 0) {
-    // حساب المدير (صلاحيات كاملة للتحكم في البيانات)
+    // حساب المدير العام (صلاحيات كاملة للتحكم في الحسابات والبيانات)
     $admin_pw = password_hash('admin123', PASSWORD_DEFAULT);
-    mysqli_query($conn, "INSERT INTO `user` (username, password, role) VALUES ('admin', '$admin_pw', 'admin')");
+    mysqli_query($conn, "INSERT INTO `user` (username, password, role, status) VALUES ('admin', '$admin_pw', 'superadmin', 'active')");
 
-    // حساب الطالب (عرض وقراءة وتصفح فقط)
+    // حساب المساهم التجريبي (إضافة وتعديل بيانات الإعجاز بعد التفعيل)
     $student_pw = password_hash('demo123', PASSWORD_DEFAULT);
-    mysqli_query($conn, "INSERT INTO `user` (username, password, role) VALUES ('demo', '$student_pw', 'student')");
+    mysqli_query($conn, "INSERT INTO `user` (username, password, role, status) VALUES ('demo', '$student_pw', 'contributor', 'active')");
 }
 
 // إدخال مواضيع الإعجاز العلمي الافتراضية إذا كان الجدول فارغاً
