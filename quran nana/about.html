@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About | Quran Analytics Portal</title>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Link to global CSS stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Shared Top Navigation Bar LTR -->
+    <header class="topbar">
+        <div class="topbar-brand">
+            <svg viewBox="0 0 24 24">
+                <path d="M12,3L1,9L12,15L21,10.09V17H23V9L12,3M12,5.18L18.82,8.9L12,12.62L5.18,8.9L12,5.18M12,16.5C10.75,16.5 9.54,16.2 8.44,15.65L7,17C8.43,17.9 10.15,18.5 12,18.5C13.85,18.5 15.57,17.9 17,17L15.56,15.65C14.46,16.2 13.25,16.5 12,16.5M12,20C10,20 8.16,19.3 6.66,18.15L5.22,19.56C7.07,21.1 9.43,22 12,22C14.57,22 16.93,21.1 18.78,19.56L17.34,18.15C15.84,19.3 14,20 12,20Z"/>
+            </svg>
+            <h1>Quran Analytics</h1>
+        </div>
+
+        <ul class="topbar-menu">
+            <li><a href="dashboard.php"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg><span>Home</span></a></li>
+            <li><a href="about.html" class="active"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>About Project</span></a></li>
+        </ul>
+
+        <div class="user-strip">
+            <a href="login.php" class="btn-logout" style="background: var(--primary-light); color: var(--primary); border-color: rgba(16, 185, 129, 0.3)">Login Portal</a>
+        </div>
+    </header>
+
+    <!-- Main Layout -->
+    <main class="layout">
+        <section class="panel">
+            <div class="section-heading">
+                <h2>Project Overview & Architecture</h2>
+                <p>Learn about the database structures, styling systems, and interactive modules of the portal.</p>
+            </div>
+
+            <!-- Content Card -->
+            <div style="background: rgba(15, 23, 42, 0.4); border: 1px solid var(--border-color); border-radius: 18px; padding: 24px; line-height: 1.8; margin-bottom: 24px;">
+                <h3 style="color: var(--primary); font-size: 20px; font-weight: 700; margin-bottom: 12px;">1. Academic Requirement Scope</h3>
+                <p style="color: var(--text-muted); font-size: 14.5px; margin-bottom: 16px;">
+                    This project is designed to combine robust back-end server mechanics (PHP & MySQL) with separate, clean static front-end assets to meet advanced university requirements:
+                </p>
+                <ul style="color: var(--text-muted); font-size: 14.5px; padding-left: 20px; margin-bottom: 24px;">
+                    <li style="margin-bottom: 8px;"><strong>HTML5 Structure:</strong> Semantic tags, LTR layout alignment, descriptive title tags, and clean class references.</li>
+                    <li style="margin-bottom: 8px;"><strong>CSS3 Styling:</strong> Centralized properties, variables (`:root`), flexbox alignments, multi-column grid systems, and glassmorphic gradients.</li>
+                    <li style="margin-bottom: 8px;"><strong>JavaScript Actions:</strong> Client-side real-time query filtering, automated notification dismissals, and dynamic navigation badges.</li>
+                </ul>
+
+                <h3 style="color: var(--primary); font-size: 20px; font-weight: 700; margin-bottom: 12px;">2. Integrated Database Schema</h3>
+                <p style="color: var(--text-muted); font-size: 14.5px; margin-bottom: 16px;">
+                    The SQL database backend runs on a highly normalized relational model featuring three integrated tables:
+                </p>
+                <ul style="color: var(--text-muted); font-size: 14.5px; padding-left: 20px;">
+                    <li style="margin-bottom: 8px;"><strong>`user`:</strong> Manages credentials, hashed passwords (`password_hash`), and authentication roles (`admin` or `student`).</li>
+                    <li style="margin-bottom: 8px;"><strong>`quran_verses`:</strong> Stores full Quranic texts with indexed attributes supporting fast substring matching.</li>
+                    <li style="margin-bottom: 8px;"><strong>`scientific_miracles`:</strong> Holds cosmic research papers, linked directly to the verses table via composite foreign fields.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Sidebar / Academic metadata -->
+        <aside class="sidebar-card">
+            <div class="sidebar-box">
+                <h3>Technical Details</h3>
+                <p style="font-size: 13.5px; color: var(--text-muted); line-height: 1.7; margin-bottom: 12px;">
+                    Developed in compliance with academic guidelines.
+                </p>
+                <div style="font-size: 12px; color: var(--text-muted); line-height: 1.6;">
+                    <strong>Server:</strong> XAMPP / Apache<br>
+                    <strong>Database:</strong> MariaDB / MySQL<br>
+                    <strong>Coding Stack:</strong> PHP, HTML, CSS, JS
+                </div>
+            </div>
+
+            <div class="sidebar-box">
+                <h3>Quick Nav</h3>
+                <a href="login.php" style="display: block; color: var(--primary); text-decoration: none; font-weight: 700; font-size: 14px; margin-top: 8px;">&rarr; Go to Sign In Portal</a>
+            </div>
+        </aside>
+    </main>
+
+    <!-- Link to global JS script -->
+    <script src="script.js"></script>
+</body>
+</html>
